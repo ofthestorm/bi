@@ -2,7 +2,24 @@
   <div class="users-members-tab dashboard-tab">
     <div class="d-flex overview-row flex-row w-100 justify-content-sm-around justify-content-xs-start">
       <div id="table-panel">
-        <font>table-panel</font>
+        <div class="table-responsive">
+          <table class="table table-striped first-td-padding">
+            <thead>
+              <tr>
+                <td>Start Node</td>
+                <td>Relationship</td>
+                <td>End Node</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="i in result">
+                <td>{{ i[0] }}</td>
+                <td>{{ i[1] }}</td>
+                <td>{{ i[2] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -11,34 +28,11 @@
 <script>
   export default {
     name: 'users-members-tab',
-
+    props: ['result'],
     data() {
       return {
-        chatMessages: [{
-            text: 'Hello! So glad you liked my work. Do you want me to shoot you?',
-            yours: false
-          },
-          {
-            text: 'Yeah, that would be cool. Maybe this Sunday at 3 pm?',
-            yours: true
-          },
-          {
-            text: 'Sounds great! See you later!',
-            yours: false
-          },
-          {
-            text: 'Should I bring a lightbox with me?',
-            yours: true
-          },
-          {
-            text: 'No, thanks. There is no need. Can we set up a meeting earlier?',
-            yours: false
-          },
-          {
-            text: 'I\'m working on Vuestic, so let\'s meet at 3pm. Thanks!',
-            yours: true
-          }
-        ]
+         
+        
       }
     }
   }
@@ -66,8 +60,7 @@
 
   #table-panel {
     width: 100%;
-    height: 300px;
-    border: 1px solid grey;
+    min-height: 300px; // border: 1px solid grey;
     margin: 10px;
   }
 </style>

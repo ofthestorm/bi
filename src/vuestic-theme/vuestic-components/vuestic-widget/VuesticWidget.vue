@@ -8,15 +8,16 @@
         <span v-if="isStar" v-on:click="onStarClick" aria-hidden="true" class="fa fa-star" style="font-size: 20px;"></span>
         <span v-else v-on:click="onStarClick" aria-hidden="true" class="fa fa-star-o" style="font-size: 20px;"></span>
       </div>
-
     </div>
     <div class="widget-body">
       <slot></slot>
+
     </div>
   </div>
 </template>
 
 <script>
+  import Bus from '@/bus.js';
   export default {
     name: 'vuestic-widget',
     props: ['headerText'],
@@ -27,13 +28,18 @@
     },
     methods: {
       onStarClick: function () {
-        this.isStar = !this.isStar
+        this.isStar = !this.isStar;
+        if (this.isStar) {
+          // this.$emit('star', '');
+          Bus.$emit('loadSuccess', 'star');
+        }
+
       },
       onDownloadClick: function () {
-        
+
       },
       onRefreshClick: function () {
-        
+
       },
     }
   }

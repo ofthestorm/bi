@@ -25,7 +25,8 @@
     "micro": "MICRO",
     "pressed": "PRESSED",
     "small": "SMALL",
-    "run": "Run"
+    "run": "Run",
+    "submit": "Submit"
   },
   "charts": {
     "horizontalBarChart": "Horizontal Bar Chart",
@@ -83,7 +84,9 @@
       "title": "Tabs",
       "maps": "Maps",
       "overview": "Overview",
-      "setupProfile": "Setup Profile"
+      "setupProfile": "Setup Profile",
+      "uploadFile": "Upload File",
+      "newRelation": "New Relation"
     },
     "chat": "Chat",
     "profileCard": "Profile Card"

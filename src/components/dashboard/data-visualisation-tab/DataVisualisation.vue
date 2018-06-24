@@ -1,8 +1,8 @@
 <template>
   <div class="data-visualisation-tab dashboard-tab">
     <div class="d-flex overview-row flex-row w-100 justify-content-sm-around justify-content-xs-start">
-      <div id="relation-graph-panel">
-        <font>relation-graph-panel</font>
+      <div id="relation-graph-panel" v-if="fold">
+        <myGraph :msg="this.result"/>
       </div>
     </div>
   </div>
@@ -14,12 +14,16 @@
   import TableData from './TableData'
   import DonutChartData from './DonutChartData'
   import FieldsDef from './fields-definition'
+  import myGraph from '@/components/dashboard/myGraph.vue'
 
   Vue.component('badge-column', BadgeColumn)
 
   export default {
     name: 'data-visualisation-tab',
-
+    props: ['result'],
+    components: {
+      myGraph
+    },
     data () {
       return {
         donutChartData: DonutChartData,
@@ -37,6 +41,7 @@
             value: 6
           }
         ],
+        fold: true,
       }
     }
   }
@@ -54,8 +59,8 @@
   }
   #relation-graph-panel {
     width: 100%;
-    height: 300px;
-    border: 1px solid grey;
+    height: 500px;
+    // border: 1px solid grey;
     margin: 10px;
   }
 

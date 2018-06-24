@@ -2,188 +2,41 @@
   <div>
     <div class="row">
       <div class="col-xs-12 col-md-12">
-        <vuestic-widget :headerText="$t('tables.basic')">
+        <vuestic-widget>
+          <section id="content">
+            <div>Value in array: {{ test[0].array[0] }}</div>
+            <!-- <div>Value in number: {{ number }}</div> -->
+            <button @click="setArray">change</button>
+          </section>
+
           <div class="table-responsive">
             <table class="table table-striped first-td-padding">
               <thead>
                 <tr>
-                  <td>{{'tables.headings.name' | translate}}</td>
-                  <td>{{'tables.headings.email' | translate}}</td>
-                  <td>{{'tables.headings.city' | translate}}</td>
-                  <td align="right">{{'tables.headings.score' | translate}}</td>
-                  <td></td>
+                  <td>Type</td>
+                  <td>Limit</td>
+                  <td>Start Node</td>
+                  <td>Relationship</td>
+                  <td>End Node</td>
+                  <td>Step Number</td>
+                  <td>Run</td>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Matthew McCormick</td>
-                  <td>matthew30@mail.ol</td>
-                  <td>Vancouver</td>
-                  <td align="right">93</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Nancy Bo</td>
-                  <td>nancy@boonweb.com</td>
-                  <td>Washington</td>
-                  <td align="right">280</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Frederiko Lopez</td>
-                  <td>fr.lopez@webmail.sp</td>
-                  <td>Barcelona</td>
-                  <td align="right">16</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Stanley Hummer</td>
-                  <td>mr_winner_2999@gmail.cb</td>
-                  <td>Manchester</td>
-                  <td align="right">57</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Lendley Wintz</td>
-                  <td>9938198146@mailster.io</td>
-                  <td>Wien</td>
-                  <td align="right">113</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Barbara Noz</td>
-                  <td>barbaranoz@mailster.io</td>
-                  <td>Brussels</td>
-                  <td align="right">68</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Matthew McCormick</td>
-                  <td>matthew30@mail.ol</td>
-                  <td>Vancouver</td>
-                  <td align="right">93</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Nancy Bo</td>
-                  <td>nancy@boonweb.com</td>
-                  <td>Washington</td>
-                  <td align="right">280</td>
-                  <td></td>
+                <tr v-for="i in tableData">
+                  <td>{{ i.type }}</td>
+                  <td>{{ i.limit }}</td>
+                  <td>{{ i.start }}</td>
+                  <td>{{ i.relation }}</td>
+                  <td>{{ i.end }}</td>
+                  <td>{{ i.step }}</td>
+                  <td v-on:click="runStar(i)">▶️</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </vuestic-widget>
-        <dashboard></dashboard>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <vuestic-widget :headerText="$t('tables.styled')">
-          <div class="table-responsive">
-            <table class="table table-striped table-sm color-icon-label-table">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>{{'tables.headings.name' | translate}}</td>
-                  <td>{{'tables.headings.email' | translate}}</td>
-                  <td>{{'tables.headings.city' | translate}}</td>
-                  <td align="right">{{'tables.headings.score' | translate}}</td>
-                  <td align="middle"></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td>Matthew McCormick</td>
-                  <td>matthew30@mail.ol</td>
-                  <td>Vancouver</td>
-                  <td align="right">93</td>
-                  <td align="middle"></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>Nancy Bo</td>
-                  <td>nancy@boonweb.com</td>
-                  <td>Washington</td>
-                  <td align="right">280</td>
-                  <td align="middle"></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>Frederiko Lopez</td>
-                  <td>fr.lopez@webmail.sp</td>
-                  <td>Barcelona</td>
-                  <td align="right">16</td>
-                  <td align="middle"></td>
-                </tr>
-                <tr class="table-danger">
-                  <td>
-                    <span class="badge badge-pill badge-danger">DANGER</span>
-                  </td>
-                  <td>Stanley Hummer</td>
-                  <td>mr_winner_2999@gmail.cb</td>
-                  <td>Manchester</td>
-                  <td align="right">57</td>
-                  <td align="middle">
-                    <i class="fa fa-exclamation-triangle icon-right input-icon error-icon"></i>
-                  </td>
-                </tr>
-                <tr class="table-success">
-                  <td>
-                    <span class="badge badge-pill badge-primary">SUCCESS</span>
-                  </td>
-                  <td>Lendley Wintz</td>
-                  <td>9938198146@mailster.io</td>
-                  <td>Wien</td>
-                  <td align="right">113</td>
-                  <td align="middle" class="valid">
-                    <i class="fa fa-check success-icon icon-right input-icon"></i>
-                  </td>
-                </tr>
-                <tr class="table-warning">
-                  <td>
-                    <span class="badge badge-pill badge-warning">WARNING</span>
-                  </td>
-                  <td>Barbara Noz</td>
-                  <td>barbaranoz@mailster.io</td>
-                  <td>Brussels</td>
-                  <td align="right">68</td>
-                  <td align="middle"></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>Matthew McCormick</td>
-                  <td>matthew30@mail.ol</td>
-                  <td>Vancouver</td>
-                  <td align="right">93</td>
-                  <td align="middle"></td>
-                </tr>
-                <tr class="table-info">
-                  <td>
-                    <span class="badge badge-pill badge-info">INFO</span>
-                  </td>
-                  <td>Nancy Bo</td>
-                  <td>nancy@boonweb.com</td>
-                  <td>Washington</td>
-                  <td align="right">280</td>
-                  <td align="middle"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </vuestic-widget>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <vuestic-widget :headerText="$t('tables.advanced')">
-          <vuestic-data-table :apiUrl="apiUrl" :tableFields="tableFields" :itemsPerPage="itemsPerPage" :defaultPerPage="defaultTablePerPage"
-            :sortFunctions="sortFunctions" :apiMode="apiMode" :paginationPath="paginationPath" :queryParams="queryParams" />
-        </vuestic-widget>
+        <!-- <dashboard></dashboard> -->
       </div>
     </div>
 
@@ -199,25 +52,107 @@
   // import Dashboard from './dashboard/Dashboard.vue'
   import Dashboard from 'components/dashboard/Dashboard.vue'
 
+  import Bus from '@/bus.js';
+  import Router from 'vue-router'
+
   Vue.component('badge-column', BadgeColumn)
 
   export default {
     name: 'Table',
-components: {
+    components: {
       Dashboard
     },
     data() {
       return {
-        apiUrl: 'https://vuetable.ratiw.net/api/users',
-        apiMode: true,
-        tableFields: FieldsDef.tableFields,
-        itemsPerPage: ItemsPerPageDef.itemsPerPage,
-        sortFunctions: FieldsDef.sortFunctions,
-        paginationPath: '',
-        defaultTablePerPage: 6,
-        queryParams: QueryParams
+        id: +new Date(),
+        test: [{
+          array: [0, 0, 0, 0]
+        }, {
+          array: [0, 0, 0, 0]
+        }],
+        tableData: [
+          {
+            type: "start_relation",
+            limit: 25,
+            start: "Tencent",
+            relation: "industry",
+            end: "",
+            step: null
+          },
+          {
+            type: "start_n",
+            limit: 25,
+            start: "Tencent",
+            relation: "",
+            end: "",
+            step: 5
+          },
+          {
+            type: "start_end",
+            limit: 25,
+            start: "Tencent",
+            relation: "",
+            end: "Alibaba",
+            step: 2
+          },
+          {
+            type: "relation_end",
+            limit: 25,
+            start: "Tencent",
+            relation: "",
+            end: "Alibaba",
+            step: null
+          },
+        ]
       }
-    }
+    },
+    watch: {
+      tableData: function(val){
+        console.log('~');
+      }
+    },
+    methods: {
+      setArray: function () {
+        //this.test[0].array[0] = 9;
+        this.$set(this.test[0].array, 0, 9);
+        console.log(this.test[0].array[0]);
+      },
+      $refresh: function () {
+        this.id = +new Date()
+      },
+      runStar(val) {
+        console.log(val);
+        Bus.$emit('runStar',val);
+        this.$router.push({ path: '/dashboard',query: val});
+      }
+    },
+    mounted() {
+      var that = this;
+      Bus.$on('inputData', (params) => {
+        // this.p = params
+        // console.log(params);
+        // that.tableData.push(params);
+        // console.log(that.tableData.length);
+        // this.$set(this.test[0].array, 0, 9);
+
+        // FIXME: array 视图无法更新
+        that.setArray();
+        that.$set(that.tableData, that.tableData.length, params)
+        // console.log(that.tableData);
+      });
+      // console.log(p);
+      // Vue.set(this.tableData, this.tableData.length, p)
+    },
+    beforeRouteLeave(to, from, next) {
+      // 导航离开该组件的对应路由时调用
+      // 可以访问组件实例 `this`
+      console.log("hello3");
+      console.log(to.query);
+      Bus.$emit('routeChange',to.query)
+      next(vm => {
+        console.log(to);
+      })
+    },
   }
 </script>
 

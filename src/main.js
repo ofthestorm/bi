@@ -9,17 +9,25 @@ import VeeValidate from 'vee-validate'
 import App from './App'
 import store from './store'
 import router from './router'
-import { sync } from 'vuex-router-sync'
+import {
+  sync
+} from 'vuex-router-sync'
 import VuesticPlugin from 'vuestic-theme/vuestic-plugin'
 import './i18n'
 import YmapPlugin from 'vue-yandex-maps'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+
 
 
 Vue.use(VuesticPlugin)
 Vue.use(YmapPlugin)
+Vue.use(ElementUI)
 
 // NOTE: workaround for VeeValidate + vuetable-2
-Vue.use(VeeValidate, {fieldsBagName: 'formFields'})
+Vue.use(VeeValidate, {
+  fieldsBagName: 'formFields'
+})
 
 sync(store, router)
 
@@ -47,5 +55,7 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: {
+    App
+  }
 })

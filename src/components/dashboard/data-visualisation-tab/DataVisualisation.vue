@@ -2,7 +2,7 @@
   <div class="data-visualisation-tab dashboard-tab">
     <div class="d-flex overview-row flex-row w-100 justify-content-sm-around justify-content-xs-start">
       <div id="relation-graph-panel" v-if="fold">
-        <myGraph :msg="this.result"/>
+        <myGraph :msg="this.result" :time="this.time"/>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
   export default {
     name: 'data-visualisation-tab',
-    props: ['result'],
+    props: ['result','time'],
     components: {
       myGraph
     },
@@ -59,7 +59,7 @@
   }
   #relation-graph-panel {
     width: 100%;
-    height: 500px;
+    height: 600px;
     // border: 1px solid grey;
     margin: 10px;
   }

@@ -75,7 +75,6 @@
   import axios from 'axios'
   import Bus from '@/bus.js';
 
-
   export default {
     name: 'vuestic-breadcrumbs',
     props: {
@@ -87,27 +86,39 @@
     mounted() {
       var that = this;
       Bus.$on('runStar', function (msg) {
-        console.log("------runStar------");
-        console.log(msg);
-        console.log("------runStar------");
-      })
-      Bus.$on('routeChange',function (msg) {
-        console.log("------routeChange------");
-        console.log(msg);
-        console.log("------routeChange------");
+        // console.log(msg);
+      });
+      Bus.$on('download', function (msg) {
+        var content = JSON.stringify(that.result);
+        var a = document.createElement("a");
+        var file = new Blob([content]);
+        a.href = URL.createObjectURL(file);
+        a.download = 'test.txt';
+        a.click();
+      });
+      // FIXME
+      Bus.$on('refresh', function (msg) {
+        // console.log('-----click-----');
+        // that.onSearchBtnClick();
+        // console.log('---------------');
+      });
+      Bus.$on('routeChange', function (msg) {
+        // console.log("------routeChange------");
+        // console.log(msg);
+        // console.log("------routeChange------");
         that.onStarRun(msg);
       })
       Bus.$on('loadSuccess', function (msg) {
-        console.log(that.selectValue);
+        // console.log(that.selectValue);
         var params = {
           type: that.selectValue,
           limit: that.limit,
           start: "",
           relation: "",
           end: "",
-          step: ""
+          step: "",
         }
-        switch(params.type) {
+        switch (params.type) {
           case 'relation':
             {
               params.relation = that.relation;
@@ -138,7 +149,7 @@
             }
         }
         // console.log(params);
-        Bus.$emit('inputData',params);
+        Bus.$emit('inputData', params);
       })
     },
     data() {
@@ -177,7 +188,20 @@
         start3: "",
         end3: "",
 
-        result: null
+        result: [
+          [
+            ['Tencent', 18],
+            ['homepage'],
+            ['index.shtml', 0]
+          ],
+          [
+            ['Tencent', 18],
+            ['type'],
+            ['Public_company', 0]
+          ],
+        ],
+        time: null,
+        URL: "http://172.20.10.6:8888/",
       }
     },
     computed: {
@@ -206,10 +230,12 @@
         this.selectValue = data
       },
       onSearchBtnClick: function () {
+        // console.log('onSearchBtnClick()');
         var self = this
         if (!(this.limit)) {
           this.limit = 25;
         }
+
         var params = {
           limit: null,
           start_node: '',
@@ -250,38 +276,43 @@
           case 'reg_exp':
             {
               // ???
-              params.start_node = this.reg;
+              var temp = this.reg;
+              var r = "";
+              for (var i = 0; i < temp.length - 1; i++) {
+                r = r + temp[i] + "_*"
+              }
+              r = "(?i)" + r + temp[temp.length - 1] + ".*";
+              // console.log('r');
+              // console.log(r);
+              params.start_node = r;
               url = 'like_search_node/'
               break;
             }
         }
-        url = 'http://172.20.10.5:8888/' + url;
-        //ajax
-        // axios.get('http://localhost:8081/' + this.script).then(response => {
-        //   this.data = response.data.result
-        //   this.loadGraph()
-        // }, response => {
-        //   this.$message({
-        //     duration: 1000,
-        //     message: 'server connect error',
-        //     type: 'error'
-        //   })
-        // })
+        url = this.URL + url;
         axios.post(url, params).then(function (response) {
-            self.result = response.data.result
-            // console.log('!!!!');
-            // console.log(self.result);
-            // console.log('!!!!');
-            Bus.$emit('resultChange',self.result);
-            // vm.reset();
+          self.result = response.data.result
+          self.time = response.data.time.toFixed(4)
+          // console.log('!!!!!!!!!!!!!');
+          //   console.log(self.time);
+          if (self.result.length === 0) {
+            self.$message({
+              duration: 1000,
+              message: 'Sorry, no result'
+            })
+          } else {
+            Bus.$emit('resultChange', self.result, self.time)
+          }
+          // vm.reset();
+        }, response => {
+          self.$message({
+            duration: 1000,
+            message: 'Sorry, server went wrong'
           })
-          .catch(function (error) {
-            console.log(params)
-            console.log(error);
-          });
-
+        })
       },
       onStarRun: function (msg) {
+        var self = this;
         var params = {
           limit: null,
           start_node: "",
@@ -291,8 +322,8 @@
         }
         var url = "";
         params.limit = msg.limit;
-        console.log('msg:');
-        console.log(msg);
+        // console.log('msg:');
+        // console.log(msg);
         switch (msg.type) {
           case 'relation':
             {
@@ -324,25 +355,37 @@
           case 'reg_exp':
             {
               // ???
-              params.start_node = msg.start;
+              var temp = msg.start;
+              var r = "";
+              for (var i = 0; i < temp.length - 1; i++) {
+                r = r + temp[i] + "_*"
+              }
+              r = "(?i)" + r + temp[temp.length - 1] + ".*";
+              // console.log('r');
+              // console.log(r);
+              params.start_node = r;
+
               url = 'like_search_node/'
               break;
             }
         }
-        console.log('~~~~~~~~');
-        console.log(params);
-        console.log('~~~~~~~~');
-        axios.post(url, {
-            params
-          })
-          .then(function (response) {
-            console.log(response);
-            this.result = response.result;
-            Bus.$emit('resultChange',result);
-            reset();
+        // console.log('~~~~~~~~');
+        // console.log(params);
+        // console.log('~~~~~~~~');
+        url = this.URL + url;
+
+        axios.post(url, params).then(function (response) {
+            // console.log(response);
+            self.result = response.data.result
+            self.time = response.data.time.toFixed(4)
+
+            // console.log('!!!!!!!!!!!!!');
+            // console.log(self.time);
+            Bus.$emit('resultChange', self.result, self.time);
+            // reset();
           })
           .catch(function (error) {
-            console.log(error);
+            // console.log(error);
           });
       },
     }

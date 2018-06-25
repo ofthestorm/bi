@@ -3,13 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-md-12">
         <vuestic-widget>
-          <section id="content">
-            <div>Value in array: {{ test[0].array[0] }}</div>
-            <!-- <div>Value in number: {{ number }}</div> -->
-            <button @click="setArray">change</button>
-          </section>
-
-          <div class="table-responsive">
+          <div class="table-responsive" v-if="isAlive">
             <table class="table table-striped first-td-padding">
               <thead>
                 <tr>
@@ -64,14 +58,7 @@
     },
     data() {
       return {
-        id: +new Date(),
-        test: [{
-          array: [0, 0, 0, 0]
-        }, {
-          array: [0, 0, 0, 0]
-        }],
-        tableData: [
-          {
+        tableData: [{
             type: "start_relation",
             limit: 25,
             start: "Tencent",
@@ -90,40 +77,67 @@
           {
             type: "start_end",
             limit: 25,
-            start: "Tencent",
+            start: "Greater_China",
             relation: "",
-            end: "Alibaba",
-            step: 2
+            end: "Online_service",
+            step: null
           },
           {
-            type: "relation_end",
+            type: "relation",
+            limit: 25,
+            start: "",
+            relation: "industry",
+            end: "",
+            step: null
+          },
+          {
+            type: "reg_exp",
+            limit: 25,
+            start: "mahuateng",
+            relation: "",
+            end: "",
+            step: null
+          },
+          {
+            type: "relation",
+            limit: 25,
+            start: "",
+            relation: "birthPlace",
+            end: "",
+            step: null
+          },
+          {
+            type: "start_n",
             limit: 25,
             start: "Tencent",
             relation: "",
-            end: "Alibaba",
-            step: null
+            end: "",
+            step: 1
           },
-        ]
+        ],
+        isAlive: true
       }
     },
     watch: {
-      tableData: function(val){
-        console.log('~');
+      tableData: function (val, oldVal) {
+        // console.log('~');
       }
     },
     methods: {
-      setArray: function () {
-        //this.test[0].array[0] = 9;
-        this.$set(this.test[0].array, 0, 9);
-        console.log(this.test[0].array[0]);
+      reload() {
+        this.isAlive = false
+        this.$nextTick(() => (this.isAlive = true))
       },
       $refresh: function () {
         this.id = +new Date()
       },
       runStar(val) {
-        console.log(val);
-        Bus.$emit('runStar',val);
-        this.$router.push({ path: '/dashboard',query: val});
+        // console.log(val);
+        Bus.$emit('runStar', val);
+        this.$router.push({
+          path: '/dashboard',
+          query: val
+        });
       }
     },
     mounted() {
@@ -136,21 +150,20 @@
         // this.$set(this.test[0].array, 0, 9);
 
         // FIXME: array 视图无法更新
-        that.setArray();
-        that.$set(that.tableData, that.tableData.length, params)
+        // that.setArray();
+        // that.$set(that.tableData, that.tableData.length, params)
+        that.tableData.splice(0, 1, params)
+        // that.reload()
         // console.log(that.tableData);
       });
-      // console.log(p);
-      // Vue.set(this.tableData, this.tableData.length, p)
     },
     beforeRouteLeave(to, from, next) {
       // 导航离开该组件的对应路由时调用
       // 可以访问组件实例 `this`
-      console.log("hello3");
-      console.log(to.query);
-      Bus.$emit('routeChange',to.query)
+      // console.log(to.query);
+      Bus.$emit('routeChange', to.query)
       next(vm => {
-        console.log(to);
+        // console.log(to);
       })
     },
   }

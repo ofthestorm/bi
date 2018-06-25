@@ -2,7 +2,7 @@
   <nav class="navbar app-navbar navbar-toggleable-md">
     <div class="navbar-brand-container d-flex align-items-center justify-content-start">
       <router-link class="navbar-brand" to="/dashboard">
-        <i class="i-vuestic"></i>
+        KNOWLEDGE GRAPH
       </router-link>
     </div>
 

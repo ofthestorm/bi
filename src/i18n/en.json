@@ -37,14 +37,14 @@
     "bubbleChart": "Bubble Chart"
   },
   "dashboard": {
-    "dataVisualization": "Data Visualization",
+    "dataVisualization": "Graph",
     "success": "SUCCESS",
     "successMessage": "You successfully read this important alert message.",
     "elements": "Elements",
     "features": "Features",
     "setupProfile": "Setup Profile",
     "teamMembers": "Team Members",
-    "usersAndMembers": "Users & Members",
+    "usersAndMembers": "Table",
     "versions": "Versions"
   },
   "notificationsPage": {
@@ -229,7 +229,7 @@
     "title": "Progress Bars"
   },
   "tables": {
-    "basic": "Basic Table",
+    "basic": "Query result",
     "styled": "Colors, Icons, Labels",
     "advanced": "Search & Pagination",
     "headings": {

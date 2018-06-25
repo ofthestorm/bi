@@ -6,7 +6,7 @@
     <vuestic-widget class="no-padding no-v-padding" :headerText="$t('tables.basic')">
       <vuestic-tabs :names="[$t('dashboard.dataVisualization'), $t('dashboard.usersAndMembers')]" ref="tabs">
         <div :slot="$t('dashboard.dataVisualization')">
-          <data-visualisation-tab :result="this.result"></data-visualisation-tab>
+          <data-visualisation-tab :result="this.result" :time="this.time"></data-visualisation-tab>
         </div>
         <div :slot="$t('dashboard.usersAndMembers')">
           <users-members-tab :result="this.result"></users-members-tab>
@@ -47,30 +47,21 @@
     data() {
       return {
         result: [
-          [
-            ['Tencent', 18],
-            ['homepage'],
-            ['index.shtml', 0]
-          ],
-          
-          [
-            ['Tencent', 18],
-            ['service'],
-            ['Online_service', 0]
-          ],
-          [
-            ['Tencent', 18],
-            ['regionServed'],
-            ['Greater_China', 0]
-          ]
-        ]
+          ['LCLT', 18],
+          ['GST', 18],
+          ['Lulu', 18],
+          ['Keke', 18],
+        ],
+        time: null
       }
     },
     mounted() {
       var that = this;
-      Bus.$on('resultChange', function (data) {
-        console.log(data);
+      Bus.$on('resultChange', function (data, time) {
+        // console.log('------dash------');
+        // console.log(time);
         that.result = data;
+        that.time = time;
       });
     },
     methods: {
@@ -91,7 +82,7 @@
       // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
       // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
       // 可以访问组件实例 `this`
-      console.log("hello2");
+      // console.log("hello2");
     },
     // beforeRouteLeave(to, from, next) {
     //   // 导航离开该组件的对应路由时调用

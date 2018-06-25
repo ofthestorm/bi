@@ -3,8 +3,8 @@
     <div class="widget-header" v-if="headerText">
       {{headerText}}
       <div class="span-list">
-        <span aria-hidden="true" class="fa fa-refresh" style="font-size: 20px;"></span>
-        <span aria-hidden="true" class="fa fa-download" style="font-size: 20px;"></span>
+        <span aria-hidden="true" v-on:click="onRefreshClick" class="fa fa-refresh" style="font-size: 20px;"></span>
+        <span aria-hidden="true" v-on:click="onDownloadClick" class="fa fa-download" style="font-size: 20px;"></span>
         <span v-if="isStar" v-on:click="onStarClick" aria-hidden="true" class="fa fa-star" style="font-size: 20px;"></span>
         <span v-else v-on:click="onStarClick" aria-hidden="true" class="fa fa-star-o" style="font-size: 20px;"></span>
       </div>
@@ -33,13 +33,12 @@
           // this.$emit('star', '');
           Bus.$emit('loadSuccess', 'star');
         }
-
       },
       onDownloadClick: function () {
-
+        Bus.$emit('download', 'star');
       },
       onRefreshClick: function () {
-
+        Bus.$emit('refresh', 'star');
       },
     }
   }
